@@ -1,0 +1,4 @@
+#!/bin/bash
+# Shows lines containing "bash" from ps auxf
+# shellcheck disable=SC2009
+ps auxf | grep bash

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+PID_FILE="/var/run/myscript.pid"
+
+# PID dosyasını silip çıkacak temizleme fonksiyonu
+cleanup() {
+    rm -f "$PID_FILE"
+    exit 0
+}
+
+# Sinyalleri yakala
+trap 'echo "I hate the kill command"; cleanup' SIGTERM
+trap 'echo "Y U no love me?!"; cleanup' SIGINT
+trap 'cleanup' SIGQUIT
+
+# PID dosyasını oluştur
+echo $$ > "$PID_FILE"
+
+# Sonsuz döngü
+while true
+do
+    echo "To infinity and beyond"
+    sleep 2
+done

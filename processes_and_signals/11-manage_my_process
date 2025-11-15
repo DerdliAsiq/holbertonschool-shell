@@ -1,0 +1,51 @@
+#!/bin/bash
+# manage_my_process script'ini yönetir
+
+PID_FILE="/var/run/my_process.pid"
+
+# Bu script'in bulunduğu dizini al (daha sağlam bir yöntem)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_TO_RUN="$SCRIPT_DIR/manage_my_process"
+
+start_process() {
+    # Script'i arka planda başlat (&)
+    # Çıktısını /dev/null'a yönlendirerek terminali meşgul etmesini engelle
+    "$SCRIPT_TO_RUN" &> /dev/null &
+    
+    # Arka plana atılan son sürecin PID'sini ($!) dosyaya yaz
+    echo $! > "$PID_FILE"
+}
+
+stop_process() {
+    if [ -f "$PID_FILE" ]; then
+        # PID dosyasından PID'yi oku ve süreci sonlandır
+        kill "$(cat "$PID_FILE")"
+        # PID dosyasını sil
+        rm -f "$PID_FILE"
+    fi
+}
+
+# Script'e verilen ilk argümanı ($1) kontrol et
+case "$1" in
+    start)
+        start_process
+        echo "manage_my_process started"
+        ;;
+    stop)
+        stop_process
+        echo "manage_my_process stopped"
+        ;;
+    restart)
+        stop_process
+        sleep 1 # Durması için kısa bir süre bekle
+        start_process
+        echo "manage_my_process restarted"
+        ;;
+    *)
+        # Başka bir argüman verilirse veya verilmezse kullanımı göster
+        echo "Usage: manage_my_process {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0
