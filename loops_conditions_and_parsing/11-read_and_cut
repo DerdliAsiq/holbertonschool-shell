@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Reads /etc/passwd and cuts specific fields
 while read line
 do
     echo "$line" | cut -d':' -f1,3,6

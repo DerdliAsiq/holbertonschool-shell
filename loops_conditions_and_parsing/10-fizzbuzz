@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Solves the FizzBuzz problem from 1 to 100
 for i in {1..100}
 do
     if [ $((i % 15)) -eq 0 ]
