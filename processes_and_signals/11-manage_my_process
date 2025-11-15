@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# This script displays its own PID
 # manage_my_process script'ini yönetir
 
 PID_FILE="/var/run/my_process.pid"
