@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# This script displays its own PID
 PID_FILE="/var/run/myscript.pid"
 
 # PID dosyasını silip çıkacak temizleme fonksiyonu
